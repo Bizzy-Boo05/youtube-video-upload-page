@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Upload</title>
+<head>
+</head>
+<body style="font-family: Arial; background-color: #64010156; display: flex; justify-content: center; align-items: center; padding: 50px; background: url(./youtubebj.jpeg) no-repeat;background-repeat: no-repeat  center center fixed; background-size: cover ; background-position: center ;">
+  <div style="background-color: #3c0f0fe2; color: #000000; padding: 30px; border-radius: 15px; width: 600px; box-shadow: 0 0 20px rgba(0,0,0,0.1); ">
+
+    <h2 style="color: #ff0000; margin-bottom: 25px;">🎬 Upload Video</h2>
+
+    <!-- Video Preview -->
+    <div style="background-color: #d3d3d3; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center;">
+      <video id="videoPreview" width="100%" controls style="border-radius: 12px; display:none;"></video>
+      <p id="noVideo" style="color:#000000; font-weight:bold;">No video selected</p>
+    </div>
+
+    <!-- Video File Input -->
+    <input type="file" id="videoInput" accept="video/*" 
+           style="padding: 10px; width: 100%; border-radius: 8px; border: none; margin-bottom: 15px; background-color:#ffffff; color:#000000; font-weight:bold;">
+
+    <!-- Video Title -->
+    <input type="text" id="videoTitle" placeholder="Video Title" 
+           style="padding: 10px; width: 100%; border-radius: 8px; border: none; margin-bottom: 15px; background-color:#ffffff; color:#000000; font-weight:bold;">
+
+    <!-- Video Description -->
+    <textarea id="videoDesc" placeholder="Video Description" rows="4"
+           style="padding: 10px; width: 100%; border-radius: 8px; border: none; margin-bottom: 15px; background-color:#ffffff; color:#000000; font-weight:bold;"></textarea>
+
+    <!-- Upload Button -->
+    <button onclick="uploadVideo()" 
+            style="padding: 12px 25px; border-radius: 10px; border: none; background-color: #da0202d3; color: #ffffff; font-weight: bold; cursor: pointer; width: 100%;">
+      Upload
+    </button>
+
+    <!-- JS Message -->
+    <p id="message" style="margin-top: 15px; font-weight:bold;"></p>
+
+  </div>
+
+  <script>
+    const videoInput = document.getElementById('videoInput');
+    const videoPreview = document.getElementById('videoPreview');
+    const noVideo = document.getElementById('noVideo');
+    const message = document.getElementById('message');
+
+    // Preview selected video
+    videoInput.addEventListener('change', () => {
+      const file = videoInput.files[0];
+      if(file) {
+        const url = URL.createObjectURL(file);
+        videoPreview.src = url;
+        videoPreview.style.display = "block";
+        noVideo.style.display = "none";
+      } else {
+        videoPreview.style.display = "none";
+        noVideo.style.display = "block";
+      }
+    });
+
+    // Simulate Upload
+    function uploadVideo() {
+      const title = document.getElementById('videoTitle').value.trim();
+      const desc = document.getElementById('videoDesc').value.trim();
+      const file = videoInput.files[0];
+
+      if(!file) {
+        message.style.color = "red";
+        message.innerText = "❌ Please select a video!";
+        return;
+      }
+
+      if(title === "") {
+        message.style.color = "red";
+        message.innerText = "❌ Please enter a video title!";
+        return;
+      }
+
+      message.style.color = "green";
+      message.innerText = `✅ "${title}" uploaded successfully!`;
+    }
+  </script>
+
+</body>
+</html>
